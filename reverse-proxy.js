@@ -1,6 +1,6 @@
 // Configuration
-const PROXY_TARGET = '<new-domain.com>';
-const PROXY_ROUTES = ['/', '/about', '/contactUs'];
+const PROXY_TARGET = 'new.polygon.technology';
+const PROXY_ROUTES = ['/about', '/contact-us'];
 
 export default {
     async fetch(request) {
