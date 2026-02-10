@@ -58,9 +58,9 @@ const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
 ```
 
 **Example routes**:
-- `/` - Root path only
-- `/api` - All paths starting with `/api` (e.g., `/api/users`, `/api/data`)
-- `/blog` - All blog-related paths (e.g., `/blog`, `/blog/post-1`)
+- `/` - Matches only the root path exactly (not subpaths)
+- `/api` - Matches `/api` and all paths starting with `/api/` (e.g., `/api/users`, `/api/data`)
+- `/blog` - Matches `/blog` and all paths starting with `/blog/` (e.g., `/blog/post-1`, `/blog/2024/article`)
 
 ## Setup and Deployment
 
@@ -161,7 +161,3 @@ export default {
 ## Contributing
 
 Feel free to submit issues or pull requests to improve the proxy functionality.
-
-## License
-
-[Add your license information here]
