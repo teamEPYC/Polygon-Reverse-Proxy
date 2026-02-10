@@ -1,5 +1,5 @@
 // Configuration
-const PROXY_TARGET = 'new.magik.so';
+const PROXY_TARGET = '<new-domain.com>';
 const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
 
 export default {
