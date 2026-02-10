@@ -60,7 +60,7 @@ const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
 ```
 
 **Example routes**:
-- `/` - Matches only the root path exactly (`yoursite.com/` or `yoursite.com`), not subpaths. This is because the prefix check requires paths to start with `//` (i.e., `/` + `/`), which normal paths like `/about` or `/api` do not match.
+- `/` - Matches only the root path exactly (`yoursite.com/` or `yoursite.com`), not subpaths. This is because the prefix check looks for paths starting with `/` + `/`, which would be `//`, and normal paths like `/about` or `/api` start with a single `/` instead.
 - `/api` - Matches `/api` exactly and all subpaths starting with `/api/` (e.g., `/api/users`, `/api/data`)
 - `/blog` - Matches `/blog` exactly and all subpaths starting with `/blog/` (e.g., `/blog/post-1`, `/blog/2024/article`)
 
@@ -141,7 +141,7 @@ The proxy includes console logging for debugging:
 2. **CORS**: Make sure your target domain has appropriate CORS headers if making cross-origin requests
 3. **Session/Cookies**: Cookie domains should be configured appropriately on both domains
 4. **SSL/TLS**: Both domains should have valid SSL certificates
-5. **Performance**: The reverse proxy adds an additional network hop which introduces some latency overhead. The actual performance impact varies based on geographic location, backend response times, and Cloudflare's edge network proximity to users.
+5. **Performance**: The reverse proxy adds an additional network hop which introduces some latency overhead. However, since Cloudflare Workers run at the edge close to users, this can sometimes reduce overall latency compared to routing directly to a distant origin server. The actual performance impact varies based on geographic location, backend response times, and network conditions.
 
 ## Code Structure
 
