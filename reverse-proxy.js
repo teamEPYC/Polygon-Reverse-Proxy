@@ -1,5 +1,5 @@
 // Configuration
-const PROXY_TARGET = '';
+const PROXY_TARGET = '<new-domain.com>';
 const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
 const HEADERS_TO_REMOVE = ['x-frame-options', 'content-security-policy'];
 
