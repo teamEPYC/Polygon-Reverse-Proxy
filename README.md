@@ -66,19 +66,86 @@ Proxied:  POST https://new-domain.com/contactUs?source=landing
 
 ## Deployment
 
-This worker is designed for Cloudflare Workers:
+Follow these steps to deploy the reverse proxy from scratch:
 
-1. Update the `PROXY_TARGET` with your target domain
-2. Configure `PROXY_ROUTES` with the paths you want to proxy
-3. Deploy to Cloudflare Workers
-4. Route your domain through the worker
+### Step 1: Create a Cloudflare Worker
 
-## Technical Details
+1. Log in to your [Cloudflare Dashboard](https://dash.cloudflare.com)
+2. Navigate to **Workers & Pages** in the left sidebar
+3. Click **Create Application**
+4. Select **Create Worker**
+5. Give your worker a name (e.g., `polygon-proxy`)
+6. Click **Deploy**
 
-**Platform**: Cloudflare Workers
-**Runtime**: V8 JavaScript Engine
-**Protocol**: HTTP/HTTPS
-**Response Handling**: Streams response body for efficient memory usage
+### Step 2: Add the Proxy Code
+
+1. After deployment, click **Edit Code** to open the code editor
+2. Delete the default code
+3. Copy and paste the entire content of `reverse-proxy.js`
+4. Update the configuration:
+   - Set `PROXY_TARGET` to your target domain (e.g., `new-domain.com`)
+   - Configure `PROXY_ROUTES` with the paths you want to proxy (e.g., `['/', '/about', '/contactUs']`)
+5. Click **Save and Deploy**
+
+### Step 3: Configure DNS Records
+
+1. In Cloudflare Dashboard, go to your domain's DNS settings
+2. Configure DNS records for both domains:
+
+**For the base/original domain (example.com):**
+- If an existing DNS record exists:
+  - Click **Edit** on the existing record
+  - Update the **Target** to: `cdn.webflow.com`
+  - Ensure **Proxy status**: ☁️ **Proxied** (Orange cloud enabled)
+  - **TTL**: Auto
+- If no record exists:
+  - Click **Add record**
+  - **Type**: `CNAME`
+  - **Name**: `@` (for root domain)
+  - **Target**: `cdn.webflow.com`
+  - **Proxy status**: ☁️ **Proxied** (Orange cloud enabled)
+  - **TTL**: Auto
+
+**For the new target subdomain (e.g., new.example.com):**
+- Click **Add record**
+- **Type**: `CNAME`
+- **Name**: `new` (or your subdomain name)
+- **Target**: `cdn.webflow.com`
+- **Proxy status**: ☁️ **Proxied** (Orange cloud enabled)
+- **TTL**: Auto
+
+### Step 4: Configure Worker Routes
+
+1. Go back to **Workers & Pages** in Cloudflare Dashboard
+2. Select your worker (e.g., `polygon-proxy`)
+3. Go to **Settings** → **Triggers**
+4. Under **Routes**, click **Add route**
+5. Configure the route:
+   - **Route**: `example.com/*` (replace `example.com` with your actual domain)
+   - **Worker**: Select your deployed worker
+   - **Zone**: Select your domain
+6. Click **Add route**
+
+### Step 5: Verify Deployment
+
+1. Wait 1-2 minutes for DNS and route propagation
+2. Visit your domain in a browser
+3. Check the Cloudflare Workers logs:
+   - Go to your worker in the dashboard
+   - Navigate to **Observability** tab to view real-time logs
+   - Access your domain in a browser to generate log entries
+4. Verify that:
+   - Proxied routes (e.g., `/`, `/about`, `/contactUs`) are forwarded to `PROXY_TARGET`
+   - Non-proxied routes are passed through to the original domain
+
+### Deployment Checklist
+
+- [ ] Cloudflare Worker created and named
+- [ ] Proxy code deployed with correct `PROXY_TARGET` and `PROXY_ROUTES`
+- [ ] Base domain DNS record updated/added pointing to `cdn.webflow.com` (Proxied/Orange cloud)
+- [ ] New subdomain DNS record added pointing to `cdn.webflow.com` (Proxied/Orange cloud)
+- [ ] Worker route configured for your domain pattern (e.g., `example.com/*`)
+- [ ] Observability logs verified showing correct routing behavior
 
 ## Notes
 
