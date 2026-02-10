@@ -58,7 +58,7 @@ const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
 ```
 
 **Example routes**:
-- `/` - Matches only the root path exactly (not subpaths)
+- `/` - Matches only the root path exactly (`yoursite.com/` or `yoursite.com`). Due to the matching logic checking for `route + '/'`, this won't match subpaths like `/about` or `/api`
 - `/api` - Matches `/api` and all paths starting with `/api/` (e.g., `/api/users`, `/api/data`)
 - `/blog` - Matches `/blog` and all paths starting with `/blog/` (e.g., `/blog/post-1`, `/blog/2024/article`)
 
@@ -139,7 +139,7 @@ The proxy includes console logging for debugging:
 2. **CORS**: Make sure your target domain has appropriate CORS headers if making cross-origin requests
 3. **Session/Cookies**: Cookie domains should be configured appropriately on both domains
 4. **SSL/TLS**: Both domains should have valid SSL certificates
-5. **Performance**: Adds minimal latency (typically <10ms) as it runs on Cloudflare's edge network
+5. **Performance**: Adds minimal latency as it runs on Cloudflare's edge network, though actual latency depends on geographic location and backend response times
 
 ## Code Structure
 
