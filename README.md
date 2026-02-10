@@ -34,21 +34,21 @@ const PROXY_TARGET = '<new-domain.com>';
 An array of path patterns that should be proxied to the target domain.
 
 ```javascript
-const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
+const PROXY_ROUTES = ['/', '/about', '/contactUs'];
 ```
 
 ## Route Matching Logic
 
 The proxy matches routes using exact path matching and prefix matching:
 
-- **Exact Match**: `/payments` matches exactly `/payments`
-- **Prefix Match**: `/payments` also matches `/payments/checkout`, `/payments/history`, etc.
+- **Exact Match**: `/about` matches exactly `/about`
+- **Prefix Match**: `/about` also matches `/about/team`, `/about/history`, etc.
 
 Example with current configuration:
 - `example.com/` → forwarded to `new-domain.com/`
-- `example.com/payments` → forwarded to `new-domain.com/payments`
-- `example.com/payments/checkout` → forwarded to `new-domain.com/payments/checkout`
-- `example.com/about` → passed through to `example.com/about`
+- `example.com/about` → forwarded to `new-domain.com/about`
+- `example.com/contactUs` → forwarded to `new-domain.com/contactUs`
+- `example.com/products` → passed through to `example.com/products`
 
 ## Request Preservation
 
@@ -60,8 +60,8 @@ The proxy maintains complete request integrity:
 
 Example:
 ```
-Original: POST https://example.com/payments?id=123
-Proxied:  POST https://new-domain.com/payments?id=123
+Original: POST https://example.com/contactUs?source=landing
+Proxied:  POST https://new-domain.com/contactUs?source=landing
 ```
 
 ## Deployment

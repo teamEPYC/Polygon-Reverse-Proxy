@@ -1,6 +1,6 @@
 // Configuration
 const PROXY_TARGET = '<new-domain.com>';
-const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
+const PROXY_ROUTES = ['/', '/about', '/contactUs'];
 
 export default {
     async fetch(request) {
