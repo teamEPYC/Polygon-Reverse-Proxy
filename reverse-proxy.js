@@ -1,7 +1,6 @@
 // Configuration
-const PROXY_TARGET = '<new-domain.com>';
+const PROXY_TARGET = 'new.magik.so';
 const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
-const HEADERS_TO_REMOVE = ['x-frame-options', 'content-security-policy'];
 
 export default {
     async fetch(request) {
@@ -22,7 +21,6 @@ export default {
             });
 
             const newResponse = new Response(response.body, response);
-            HEADERS_TO_REMOVE.forEach(header => newResponse.headers.delete(header));
 
             return newResponse;
         }
