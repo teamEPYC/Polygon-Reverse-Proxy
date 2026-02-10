@@ -27,7 +27,7 @@ The proxy uses pattern matching to determine which requests to forward:
 The destination domain where specific routes will be forwarded.
 
 ```javascript
-const PROXY_TARGET = '<new-domain.com>';
+const PROXY_TARGET = 'new.polygon.technology';
 ```
 
 ### PROXY_ROUTES
@@ -45,10 +45,10 @@ The proxy matches routes using exact path matching and prefix matching:
 - **Prefix Match**: `/about` also matches `/about/team`, `/about/history`, etc.
 
 Example with current configuration:
-- `example.com/` → forwarded to `new-domain.com/`
-- `example.com/about` → forwarded to `new-domain.com/about`
-- `example.com/contactUs` → forwarded to `new-domain.com/contactUs`
-- `example.com/products` → passed through to `example.com/products`
+- `polygon.technology/` → forwarded to `new.polygon.technology/`
+- `polygon.technology/about` → forwarded to `new.polygon.technology/about`
+- `polygon.technology/contactUs` → forwarded to `new.polygon.technology/contactUs`
+- `polygon.technology/products` → passed through to `polygon.technology/products`
 
 ## Request Preservation
 
@@ -60,8 +60,8 @@ The proxy maintains complete request integrity:
 
 Example:
 ```
-Original: POST https://example.com/contactUs?source=landing
-Proxied:  POST https://new-domain.com/contactUs?source=landing
+Original: POST https://polygon.technology/contactUs?source=landing
+Proxied:  POST https://new.polygon.technology/contactUs?source=landing
 ```
 
 ## Deployment
@@ -83,7 +83,7 @@ Follow these steps to deploy the reverse proxy from scratch:
 2. Delete the default code
 3. Copy and paste the entire content of `reverse-proxy.js`
 4. Update the configuration:
-   - Set `PROXY_TARGET` to your target domain (e.g., `new-domain.com`)
+   - Set `PROXY_TARGET` to your target domain (e.g., `polygon.technology`)
    - Configure `PROXY_ROUTES` with the paths you want to proxy (e.g., `['/', '/about', '/contactUs']`)
 5. Click **Save and Deploy**
 
@@ -144,11 +144,11 @@ Follow these steps to deploy the reverse proxy from scratch:
 - [ ] Proxy code deployed with correct `PROXY_TARGET` and `PROXY_ROUTES`
 - [ ] Base domain DNS record updated/added pointing to `cdn.webflow.com` (Proxied/Orange cloud)
 - [ ] New subdomain DNS record added pointing to `cdn.webflow.com` (Proxied/Orange cloud)
-- [ ] Worker route configured for your domain pattern (e.g., `example.com/*`)
-- [ ] Observability logs verified showing correct routing behavior
+- [ ] Worker route configured for your domain pattern (e.g., `polygon.technology/*`)
+- [ ] Observability logs verified showing correct routing behaviour
 
 ## Notes
 
 - The proxy preserves the original request's pathname and search parameters
 - Response status codes, headers, and body are all forwarded from the target
-- Console logs are available in Cloudflare Workers dashboard for debugging
+- Console logs are available in the Cloudflare Workers dashboard for debugging
