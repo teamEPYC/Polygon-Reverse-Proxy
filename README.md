@@ -49,18 +49,20 @@ const PROXY_TARGET = '<new-domain.com>';
 **Example**: `const PROXY_TARGET = 'api.newsite.com';`
 
 ### `PROXY_ROUTES`
-An array of URL paths that should be proxied to the target domain. The proxy matches:
-- Exact path matches (e.g., `/` matches exactly the root path)
-- Path prefixes (e.g., `/payments` matches `/payments`, `/payments/checkout`, etc.)
+An array of URL paths that should be proxied to the target domain. Each route is matched using this logic:
+- Exact path match: `url.pathname === route`
+- Path prefix match: `url.pathname.startsWith(route + '/')`
+
+This means most routes will match themselves and any subpaths, but `/` is special - it only matches the root path exactly.
 
 ```javascript
 const PROXY_ROUTES = ['/', '/payments', '/page2', '/grants'];
 ```
 
 **Example routes**:
-- `/` - Matches only the root path exactly (`yoursite.com/` or `yoursite.com`), not subpaths like `/about` or `/api`
-- `/api` - Matches `/api` and all paths starting with `/api/` (e.g., `/api/users`, `/api/data`)
-- `/blog` - Matches `/blog` and all paths starting with `/blog/` (e.g., `/blog/post-1`, `/blog/2024/article`)
+- `/` - Matches only the root path exactly (`yoursite.com/` or `yoursite.com`), not subpaths. This is because the prefix check looks for paths starting with `//` which doesn't match normal paths.
+- `/api` - Matches `/api` exactly and all subpaths starting with `/api/` (e.g., `/api/users`, `/api/data`)
+- `/blog` - Matches `/blog` exactly and all subpaths starting with `/blog/` (e.g., `/blog/post-1`, `/blog/2024/article`)
 
 ## Setup and Deployment
 
@@ -139,7 +141,7 @@ The proxy includes console logging for debugging:
 2. **CORS**: Make sure your target domain has appropriate CORS headers if making cross-origin requests
 3. **Session/Cookies**: Cookie domains should be configured appropriately on both domains
 4. **SSL/TLS**: Both domains should have valid SSL certificates
-5. **Performance**: Performance impact varies based on geographic location, backend response times, and Cloudflare's edge network proximity to users
+5. **Performance**: The reverse proxy adds an additional network hop which introduces some latency overhead. The actual performance impact varies based on geographic location, backend response times, and Cloudflare's edge network proximity to users
 
 ## Code Structure
 
