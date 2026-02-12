@@ -1,6 +1,6 @@
 // Configuration
 const PROXY_TARGET = 'new.polygon.technology';
-const PROXY_ROUTES = ['/about', '/contact-us'];
+const PROXY_ROUTES = ['/', '/about', '/build-with-oms', '/polygon-pos', '/trails'];
 
 export default {
     async fetch(request) {
