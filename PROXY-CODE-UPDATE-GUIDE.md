@@ -1,4 +1,4 @@
-# HOW-TO-UPDATE-PROXY-CODE
+# HOW TO UPDATE PROXY CODE
 
 ## When To Use This
 Use this guide when updating the reverse proxy logic or modifying proxied routes from the Cloudflare dashboard.
@@ -28,7 +28,7 @@ Replace the routes with the new set:
 const PROXY_ROUTES = [
   '/',
   '/about',
-  '/build-with-oms',
+  '/launch/build-with-oms',
   '/polygon-pos',
   '/trails'
 ];
@@ -41,7 +41,7 @@ const PROXY_ROUTES = [
 ### ✅ Newly Added Routes
 
 * `/`
-* `/build-with-oms`
+* `/launch/build-with-oms`
 * `/polygon-pos`
 * `/trails`
 
@@ -67,7 +67,7 @@ const PROXY_ROUTES = [
 
 * `/` → Proxied
 * `/about` → Proxied
-* `/build-with-oms` → Proxied
+* `/launch/build-with-oms` → Proxied
 * `/polygon-pos` → Proxied
 * `/trails` → Proxied
 * `/contact-us` → NOT proxied
@@ -79,7 +79,3 @@ const PROXY_ROUTES = [
 * Route matching uses prefix logic
 * No DNS changes required
 * No Worker route changes required
-
-```
-
-If you'd like, I can also generate a stricter version with warnings / rollback steps / versioning section.
